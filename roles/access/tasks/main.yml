@@ -1,0 +1,22 @@
+
+- name: configure sudoers
+  template:
+    src: 'sudoers.j2'
+    dest: '/etc/sudoers'
+    mode: '0440'
+
+- name: create/managed authorized users
+  user:
+    name: '{{ item.username }}'
+    groups: 'sudo'
+    append: 'yes'
+    shell: '{{ item.shell }}'
+    password: '{{ item.password|default(omit) }}'
+  with_items: authorized_users
+
+- name: add user keys
+  authorized_key:
+    user: '{{ item.username }}'
+    key: '{{ item.key }}'
+  with_items: authorized_users
+

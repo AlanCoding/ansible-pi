@@ -1,0 +1,7 @@
+# Setup wifi
+
+- name: Configure WPA Supplicant
+
+  with_items: wifi_config
+  environment:
+    ANSIBLE_VAULT_PASSWORD_FILE: ~/.vault_pass.txt

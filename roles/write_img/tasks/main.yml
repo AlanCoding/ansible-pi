@@ -1,0 +1,12 @@
+- name: Download Latest Img
+  hosts: local
+  connection: local
+  - shell: curl https://downloads.raspberrypi.org/raspbian_lite_latest > ~/.tmp/latest.img.zip; unzip ~/.tmp/raspbian.img.zip ~/.tmp/latest.img
+    when: distro == 'raspbian'
+  - shell: curl https://github.com/RetroPie/RetroPie-Setup/releases/download/3.8.1/retropie-v3.8.1-rpi2_rpi3.img.gz > ~/.tmp/latest.img.gz; tar -xf ~/.tmp/latest.img.gz -C ~/.tmp/latest.img
+    when: distro == 'retropie'
+
+- name: Write to specified disk
+  hosts: local
+  connection: local
+  - shell: dd bs=4M if=~/.tmp/latest.img of={{device_path}}
