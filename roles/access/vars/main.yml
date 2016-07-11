@@ -4,6 +4,3 @@ authorized_users:
   - username: leigh
     key: https://github.com/leigh-johnson.keys
     shell: '/bin/bash'
-  - username: ansible
-    key: https://github.com/leigh-johnson.keys
-    shell: '/bin/bash'

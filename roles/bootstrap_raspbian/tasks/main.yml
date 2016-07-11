@@ -1,7 +1,17 @@
 # Setup wifi
 
 - name: Configure WPA Supplicant
-
+  template:
+    src: 'wpa_supplicant.conf.j2'
+    dest: '/etc/wpa_supplicant/wpa_supplicant.conf'
+    mode: '0440'
   with_items: wifi_config
   environment:
     ANSIBLE_VAULT_PASSWORD_FILE: ~/.vault_pass.txt
+
+- name: Set Hostname
+  shell: sed -i 's/raspberrypi/{{hostname}}/g' /etc/hosts; sed -i 's/raspberrypi/{{hostname}}/g' /etc/hostname
+
+- name: Configure Static IP
+  when: static_ip == true
+
